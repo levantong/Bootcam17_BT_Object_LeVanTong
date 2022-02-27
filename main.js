@@ -8,7 +8,6 @@ if(localStorage.getItem("DSSP")){
 } else {
     var danhSachSP = [];
 }
-console.log(danhSachSP);
 //Thêm SP:
 var themSP = function () {
 
@@ -55,7 +54,10 @@ var renderListSP = function (dssp) {
     })
     document.getElementById("tblDanhSachSP").innerHTML = inner;
 }
-
+var hideEdit = function(){
+    document.getElementById("btnCapNhat").style.display = "none";
+}
+document.getElementById("btnThemSP").addEventListener("click",hideEdit);
 renderListSP(danhSachSP);
 document.getElementById("btnThemNV").onclick = themSP;
 //hàm xóa sản phẩm
@@ -75,8 +77,10 @@ var suaSP = function (index) {
     document.getElementById("HinhSP").value = danhSachSP[index].hinh;
     document.getElementById("MoTa").value = danhSachSP[index].moTa;
     //enabled lại nút Thêm Sản phẩm sau khi đã cập nhật thông tin
+    document.getElementById("btnCapNhat").style.display = "inline-block";
 
-    document.getElementById("btnThemNV").disabled = true;
+
+    document.getElementById("btnThemNV").style.display = "none";
     //lưu index của sp cần sửa thông tin vào localStorage để dùng cho khi nhấn nút cập nhật sp (do giao diện đề không quản lý theo mã SP nên không dùng findIndex để tìm thứ tự sp cần edit)
     localStorage.setItem("indexSPCanEdit",index)
 }
