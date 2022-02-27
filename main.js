@@ -3,8 +3,12 @@
 console.clear();
 
 //lấy lại danh sách sản phẩm từ local Storage
-var danhSachSP = JSON.parse(localStorage.getItem("DSSP"));
-
+if(localStorage.getItem("DSSP")){
+    var danhSachSP = JSON.parse(localStorage.getItem("DSSP"));
+} else {
+    var danhSachSP = [];
+}
+console.log(danhSachSP);
 //Thêm SP:
 var themSP = function () {
 
