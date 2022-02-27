@@ -101,12 +101,31 @@ var capNhatSP = function(){
     alert("Thêm sản phẩm thành công!");
     //tắt modal
     document.getElementById("btnDong").click();
+    //thông báo thành công
+    alert(`Thay đổi thông tin sản phẩm thứ ${index+1} thành công!`);
     //enabled lại nút Thêm Sản phẩm sau khi đã cập nhật thông tin
     document.getElementById("btnThemNV").disabled = false;
-
-
 }
 document.getElementById("btnCapNhat").onclick = capNhatSP;
-// renderListSP(danhSachSP);
-// localStorage.setItem("DSSP", JSON.stringify(danhSachSP));
-// alert(`Thay đổi thông tin sản phẩm thứ ${index+1} thành công!`);
+
+//enabled lại nút Thêm Sản phẩm khi nhấn thêm mới SP
+document.getElementById("btnThemSP").onclick = function(){
+    document.getElementById("btnThemNV").disabled = false;
+}
+//hàm loại bỏ dấu tiếng việt, tham khảo tại: https://www.tunglt.com/2018/11/bo-dau-tieng-viet-javascript-es6/
+function removeAccents(str) {
+    return str.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
+var timSP = function(){
+    //lấy thông tin nhập vào
+    var inputTK = document.getElementById("inputTK").value;
+    var keySearch = removeAccents(inputTK.toLowerCase().replace(/\s+/g, '')); //loại bỏ dấu TV và dấu cách, đổi sang chữ thường.
+    //tạo mảng đã lọc theo từ khóa tìm kiếm, show mảng mới
+    var filterSP = danhSachSP.filter(function(sp){
+        return removeAccents(sp.ten.toLowerCase().replace(/\s+/g, '')).includes(keySearch)
+    });
+    renderListSP(filterSP);
+}
+document.getElementById("inputTK").addEventListener("input", timSP);
